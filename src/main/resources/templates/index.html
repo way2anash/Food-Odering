@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>Home</title>
+
+	<link rel="stylesheet" th:href="@{webjars/bootstrap/4.2.1/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css}" />
+	<link rel="stylesheet" th:href="@{/css/main.css}" />
+	<link rel="stylesheet" th:href="@{/css/card.css}" />
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+		<div class="container">
+			<a class="navbar-brand" href="#">Nepdroid Kitchen</a>
+
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<a class="nav-item nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+					<a class="nav-item nav-link" th:href="@{/cart}">My Cart</a>
+
+				</ul>
+
+				<ul class="nav navbar-nav ml-auto">
+					<li>
+						<form th:action="@{/logout}" method="POST">
+							<input class="btn btn-outline-danger btn-lg btn-block" type="submit" value="Logout" />
+						</form>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+	</nav>
+
+	<div class="row">
+		<div class="col-md-12 alert-col relative">
+			<div class="alert alert-info absolue center" role="alert"><button type="button" class="close"
+					data-dismiss="alert" aria-label="Close"><span aria-hidden="true"></span></button>
+				<span th:text="${message}"></span></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-6 col-md-4" th:each="food : ${foods}">
+			<div class="card">
+				<img class="card-img-top" th:src="@{${food.imageUrl}}" alt="Food Image">
+				<div class="card-body">
+					<h5 class="card-title"><span th:text="${food.name}"></span></h5>
+					<p class="card-text">Price : ₹ <span th:text="${food.price}"></p>
+					<p class="card-text">Category : <span th:text="${food.category}"></p>
+
+					<form action="#"  th:action="@{/cart}" method="post" th:object="${cartFood}">
+						<input type="hidden" id="id" name="id" th:value="${food.id}">
+						<input type="hidden" id="name" name="name" th:value="${food.name}">
+						<input type="hidden" id="category" name="category" th:value="${food.category}">
+						<input type="hidden" id="price" name="price" th:value="${food.price}">
+						<input type="hidden" id="imageUrl" name="imageUrl" th:value="${food.imageUrl}">
+						<button type="submit" class="btn btn-rounded btn-primary"><i class="bi bi-cart-plus-fill pr-2"
+								aria-hidden="true"></i>Add to Cart</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="footer bg-dark text-center text-white">
+
+		<!-- Copyright -->
+		<div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+			© 2021 Copyright:
+			<a class="text-reset fw-bold" th:href="@{/}">Nepdroid Kitchen</a>
+		</div>
+		<!-- Copyright -->
+	</footer>
+
+	<script type="text/javascript" th:src="@{webjars/bootstrap/4.2.1/js/bootstrap.min.js}"></script>
+</body>
+
+
+</html>
